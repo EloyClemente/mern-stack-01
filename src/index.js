@@ -1,0 +1,22 @@
+const express = require('express')
+const morgan = require('morgan')
+const path = require('path')
+const { mongoose } = require('./database')
+
+const app = express()
+
+app.set('port', process.env.PORT || 3000)
+
+
+
+app.use(morgan('dev'))
+app.use(express.json())
+app.use('/api/tasks', require('./routes/task.routes'))
+app.use(express.static(path.resolve(__dirname, 'public')))
+
+
+
+app.listen(app.get('port'), ()=>
+{
+    console.log(`Servidor ejecutando en ${ app.get('port') }`)
+})
